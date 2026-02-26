@@ -156,6 +156,7 @@ canvas{
     position:absolute;
     top:-10%;
     color:#ff5fa2;
+    font-size:18px;
     animation:fall linear infinite;
     opacity:.8;
 }
@@ -187,13 +188,13 @@ canvas{
 
         <div id="controls">
             <div></div>
-            <div class="control-btn" onclick="setDir(0,-1)">⬆️</div>
+            <div class="control-btn" data-x="0" data-y="-1">⬆️</div>
             <div></div>
-            <div class="control-btn" onclick="setDir(-1,0)">⬅️</div>
+            <div class="control-btn" data-x="-1" data-y="0">⬅️</div>
             <div class="control-btn">❤️</div>
-            <div class="control-btn" onclick="setDir(1,0)">➡️</div>
+            <div class="control-btn" data-x="1" data-y="0">➡️</div>
             <div></div>
-            <div class="control-btn" onclick="setDir(0,1)">⬇️</div>
+            <div class="control-btn" data-x="0" data-y="1">⬇️</div>
             <div></div>
         </div>
     </div>
@@ -206,42 +207,28 @@ canvas{
     </div>
 </div>
 
-<!-- 🌹 POEMA COMPLETO SIN CAMBIOS -->
 <div id="poemScreen">
-<div id="poemOverlay"></div>
-<div class="poem-box">
-<h2>Para ti, mi Amorcito 💕</h2>
-<p>
-Buenos días, amorshito ☀️💖 por fin puedo decir  
-que hoy estaré en tus brazos 🤍, para cuidarte,  
-inundarte de besitos 😘, ayudarte y llenarte de amor 💫.<br><br>
+    <div id="poemOverlay"></div>
+    <div class="poem-box">
+        <h2>Para ti, mi Amorcito 💕</h2>
+        <p>
+        Buenos días, amorshito ☀️💖 por fin puedo decir  
+        que hoy estaré en tus brazos 🤍, para cuidarte,  
+        inundarte de besitos 😘, ayudarte y llenarte de amor 💫.<br><br>
 
-Amor, no prometo que tus días serán color de rosa 🌸,  
-pero sí sé que haré lo que sea para pintar tus días de colores 🎨✨.  
-Amor, no prometo que tendremos días mágicos 🪄,  
-pero haré que cada día sea mágico con nuestro amor 💞.<br><br>
+        Amor, no prometo que tus días serán color de rosa 🌸,  
+        pero sí sé que haré lo que sea para pintar tus días de colores 🎨✨.  
+        Amor, no prometo que tendremos días mágicos 🪄,  
+        pero haré que cada día sea mágico con nuestro amor 💞.<br><br>
 
-Si estas estresadita, estaré ahí para darte tus masajitos 🤲💆‍♀️,  
-Si tienes deseos, quiero ser quien los cumpla 🌠.  
-Si quieres que baje y traiga las estrellas ✨🌌,  
-Lo haré para que, a tu lado, el universo se complete 💫.<br><br>
+        Si estás estresadita, estaré ahí para darte tus masajitos 🤲💆‍♀️,  
+        si tienes deseos, quiero ser quien los cumpla 🌠.  
+        Si quieres que baje y traiga las estrellas ✨🌌,  
+        lo haré para que, a tu lado, el universo se complete 💫.<br><br>
 
-No tienes que darme regalos o detalles para decirme que me amas 🎁❌,  
-con solo tu sonrisa mi día se alegra 😊.  
-Con solo tu presencia tengo razón de vivir 💓,  
-Y tu aroma, en esas noches de calor, me derrite de amor 🌙🔥❤️.<br><br>
-
-Fueron días de espera, amor ⏳, pero para mí fue una eternidad,  
-y no me queda más que decirte: espérame un ratito más 🤍.  
-Prontito estaré a tu lado, mi reina preciosa 👑✨.  
-Diría que tengas un estupendo día, pero lo tendrás cuando  
-nos encontremos y corra a tus brazos 🤗  
-para quedarme dormido con tu amor 😴❤️.<br><br>
-
-Atte. Gregory 💌  
-<em>(con su media neurona 🤭)</em>
-</p>
-</div>
+        Atte. Gregory 💌 <em>(con su media neurona 🤭)</em>
+        </p>
+    </div>
 </div>
 
 <audio id="musicGame" src="musica1.mp3" loop></audio>
@@ -253,11 +240,10 @@ document.addEventListener("contextmenu", e => e.preventDefault());
 const canvas=document.getElementById("game");
 const ctx=canvas.getContext("2d");
 
-let grid=18, snake, food, dir, score, loop;
-let speed=160;
+let size, grid=18, snake, food, dir, score, loop, speed=160;
 
 function resize(){
-    let size=Math.min(window.innerWidth*0.9,360);
+    size=Math.min(window.innerWidth*0.9,360);
     canvas.width=size;
     canvas.height=size;
 }
@@ -270,7 +256,7 @@ function checkPassword(){
         gameContainer.style.display="flex";
         musicGame.play();
         startGame();
-    }else alert("Respuesta incorrecta 💔");
+    }
 }
 
 function startGame(){
@@ -292,10 +278,7 @@ function randomFood(){
 }
 
 function setDir(x,y){
-    if(dir.x!==-x && dir.y!==-y){
-        dir={x,y};
-        update();
-    }
+    if(dir.x!==-x && dir.y!==-y) dir={x,y};
 }
 
 function update(){
@@ -344,8 +327,9 @@ function draw(){
 }
 
 function updateScore(){
-    document.getElementById("score").innerText=`❤️ ${score} / 20`;
+    scoreEl.innerText=`❤️ ${score} / 20`;
 }
+const scoreEl=document.getElementById("score");
 
 function restartGame(){
     gameOver.style.display="none";
@@ -354,15 +338,29 @@ function restartGame(){
 
 function startHeartRain(){
     for(let i=0;i<30;i++){
-        const h=document.createElement("div");
-        h.className="heart";
-        h.innerText="❤️";
-        h.style.left=Math.random()*100+"vw";
-        h.style.fontSize=16+Math.random()*20+"px";
-        h.style.animationDuration=3+Math.random()*4+"s";
-        poemScreen.appendChild(h);
+        const heart=document.createElement("div");
+        heart.className="heart";
+        heart.innerText="❤️";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.animationDuration=3+Math.random()*4+"s";
+        heart.style.fontSize=16+Math.random()*20+"px";
+        poemScreen.appendChild(heart);
     }
 }
+
+// 🚀 CONTROLES SIN RETARDO
+document.querySelectorAll(".control-btn").forEach(btn=>{
+    const x=btn.dataset.x;
+    const y=btn.dataset.y;
+    if(x && y){
+        const move=e=>{
+            e.preventDefault();
+            setDir(parseInt(x),parseInt(y));
+        };
+        btn.addEventListener("touchstart",move,{passive:false});
+        btn.addEventListener("mousedown",move);
+    }
+});
 </script>
 
 </body>
