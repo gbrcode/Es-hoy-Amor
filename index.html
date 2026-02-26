@@ -12,7 +12,6 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-/* 📱 FIX CELULAR: gestos, zoom, selección */
 body, button, .control-btn{
     touch-action: manipulation;
     user-select: none;
@@ -31,7 +30,6 @@ body{
     overflow:hidden;
 }
 
-/* 🔒 Lock */
 #lockScreen{
     position:fixed;
     inset:0;
@@ -51,7 +49,6 @@ body{
     text-align:center;
 }
 
-/* 🎮 CONTENEDOR JUEGO */
 #gameContainer{
     display:none;
     flex-direction:column;
@@ -88,7 +85,6 @@ canvas{
     border-radius:18px;
 }
 
-/* 🎮 Controles */
 #controls{
     display:grid;
     grid-template-columns:repeat(3,60px);
@@ -103,12 +99,10 @@ canvas{
     align-items:center;
     justify-content:center;
     font-size:1.4em;
-    cursor:pointer;
 }
 
 .control-btn:active{background:#ff8fc7;}
 
-/* 💔 Game Over */
 #gameOver{
     position:fixed;
     inset:0;
@@ -126,7 +120,6 @@ canvas{
     text-align:center;
 }
 
-/* 🌹 POEMA */
 #poemScreen{
     position:fixed;
     inset:0;
@@ -146,7 +139,6 @@ canvas{
     background:rgba(0,0,0,.65);
 }
 
-/* 📜 POEMA CON SCROLL */
 .poem-box{
     position:relative;
     z-index:5;
@@ -155,18 +147,15 @@ canvas{
     border-radius:25px;
     text-align:center;
     max-width:500px;
-
     max-height:85vh;
     overflow-y:auto;
     -webkit-overflow-scrolling: touch;
 }
 
-/* ❤️ LLUVIA DE CORAZONES */
 .heart{
     position:absolute;
     top:-10%;
     color:#ff5fa2;
-    font-size:18px;
     animation:fall linear infinite;
     opacity:.8;
 }
@@ -182,7 +171,6 @@ canvas{
 
 <body>
 
-<!-- 🔒 Lock -->
 <div id="lockScreen">
     <div class="lock-box">
         <h2>🔒 Antes de comenzar</h2>
@@ -192,10 +180,9 @@ canvas{
     </div>
 </div>
 
-<!-- 🎮 Game -->
 <div id="gameContainer">
     <div id="overlay">
-        <div id="score">❤️ 0 / 20</div>
+        <div id="score">❤️ 2 / 20</div>
         <canvas id="game"></canvas>
 
         <div id="controls">
@@ -212,7 +199,6 @@ canvas{
     </div>
 </div>
 
-<!-- 💔 Game Over -->
 <div id="gameOver">
     <div class="gameover-box">
         <h2>💔 Te chocaste contigo amor</h2>
@@ -220,59 +206,58 @@ canvas{
     </div>
 </div>
 
-<!-- 🌹 Poema -->
+<!-- 🌹 POEMA COMPLETO SIN CAMBIOS -->
 <div id="poemScreen">
-    <div id="poemOverlay"></div>
-    <div class="poem-box">
-        <h2>Para ti, mi Amorcito 💕</h2>
-        <p>
-        Buenos días, amorshito ☀️💖 por fin puedo decir  
-        que hoy estaré en tus brazos 🤍, para cuidarte,  
-        inundarte de besitos 😘, ayudarte y llenarte de amor 💫.<br><br>
+<div id="poemOverlay"></div>
+<div class="poem-box">
+<h2>Para ti, mi Amorcito 💕</h2>
+<p>
+Buenos días, amorshito ☀️💖 por fin puedo decir  
+que hoy estaré en tus brazos 🤍, para cuidarte,  
+inundarte de besitos 😘, ayudarte y llenarte de amor 💫.<br><br>
 
-        Amor, no prometo que tus días serán color de rosa 🌸,  
-        pero sí sé que haré lo que sea para pintar tus días de colores 🎨✨.  
-        Amor, no prometo que tendremos días mágicos 🪄,  
-        pero haré que cada día sea mágico con nuestro amor 💞.<br><br>
+Amor, no prometo que tus días serán color de rosa 🌸,  
+pero sí sé que haré lo que sea para pintar tus días de colores 🎨✨.  
+Amor, no prometo que tendremos días mágicos 🪄,  
+pero haré que cada día sea mágico con nuestro amor 💞.<br><br>
 
-        Si estas estresadita, estaré ahí para darte tus masajitos 🤲💆‍♀️,  
-        Si tienes deseos, quiero ser quien los cumpla 🌠.  
-        Si quieres que baje y traiga las estrellas ✨🌌,  
-        Lo haré para que, a tu lado, el universo se complete 💫.<br><br>
+Si estas estresadita, estaré ahí para darte tus masajitos 🤲💆‍♀️,  
+Si tienes deseos, quiero ser quien los cumpla 🌠.  
+Si quieres que baje y traiga las estrellas ✨🌌,  
+Lo haré para que, a tu lado, el universo se complete 💫.<br><br>
 
-        No tienes que darme regalos o detalles para decirme que me amas 🎁❌,  
-        con solo tu sonrisa mi día se alegra 😊.  
-        Con solo tu presencia tengo razón de vivir 💓,  
-        Y tu aroma, en esas noches de calor, me derrite de amor 🌙🔥❤️.<br><br>
+No tienes que darme regalos o detalles para decirme que me amas 🎁❌,  
+con solo tu sonrisa mi día se alegra 😊.  
+Con solo tu presencia tengo razón de vivir 💓,  
+Y tu aroma, en esas noches de calor, me derrite de amor 🌙🔥❤️.<br><br>
 
-        Fueron días de espera, amor ⏳, pero para mí fue una eternidad,  
-        y no me queda más que decirte: espérame un ratito más 🤍.  
-        Prontito estaré a tu lado, mi reina preciosa 👑✨.  
-        Diría que tengas un estupendo día, pero lo tendrás cuando  
-        nos encontremos y corra a tus brazos 🤗  
-        para quedarme dormido con tu amor 😴❤️.<br><br>
+Fueron días de espera, amor ⏳, pero para mí fue una eternidad,  
+y no me queda más que decirte: espérame un ratito más 🤍.  
+Prontito estaré a tu lado, mi reina preciosa 👑✨.  
+Diría que tengas un estupendo día, pero lo tendrás cuando  
+nos encontremos y corra a tus brazos 🤗  
+para quedarme dormido con tu amor 😴❤️.<br><br>
 
-        Atte. Gregory 💌  
-        <em>(con su media neurona 🤭)</em>
-        </p>
-    </div>
+Atte. Gregory 💌  
+<em>(con su media neurona 🤭)</em>
+</p>
+</div>
 </div>
 
-<!-- 🎵 Música -->
 <audio id="musicGame" src="musica1.mp3" loop></audio>
 <audio id="musicPoem" src="musica2.mp3" loop></audio>
 
 <script>
-// ❌ bloquear menú contextual (mensaje Google)
 document.addEventListener("contextmenu", e => e.preventDefault());
 
 const canvas=document.getElementById("game");
 const ctx=canvas.getContext("2d");
 
-let size, grid=18, snake, food, dir, score, loop, speed=280;
+let grid=18, snake, food, dir, score, loop;
+let speed=160;
 
 function resize(){
-    size=Math.min(window.innerWidth*0.9,360);
+    let size=Math.min(window.innerWidth*0.9,360);
     canvas.width=size;
     canvas.height=size;
 }
@@ -289,10 +274,14 @@ function checkPassword(){
 }
 
 function startGame(){
-    snake=[{x:9,y:9}];
+    snake=[
+        {x:9,y:9},
+        {x:8,y:9},
+        {x:7,y:9}
+    ];
     dir={x:1,y:0};
     food=randomFood();
-    score=0;
+    score=2;
     updateScore();
     clearInterval(loop);
     loop=setInterval(update,speed);
@@ -303,7 +292,10 @@ function randomFood(){
 }
 
 function setDir(x,y){
-    if(dir.x!==-x && dir.y!==-y) dir={x,y};
+    if(dir.x!==-x && dir.y!==-y){
+        dir={x,y};
+        update();
+    }
 }
 
 function update(){
@@ -323,7 +315,9 @@ function update(){
     snake.unshift(h);
 
     if(h.x===food.x && h.y===food.y){
-        score++; updateScore(); food=randomFood();
+        score++;
+        updateScore();
+        food=randomFood();
         if(score>=20){
             clearInterval(loop);
             musicGame.pause();
@@ -350,25 +344,23 @@ function draw(){
 }
 
 function updateScore(){
-    scoreEl.innerText=`❤️ ${score} / 20`;
+    document.getElementById("score").innerText=`❤️ ${score} / 20`;
 }
-const scoreEl=document.getElementById("score");
 
 function restartGame(){
     gameOver.style.display="none";
     startGame();
 }
 
-/* ❤️ Lluvia de corazones */
 function startHeartRain(){
     for(let i=0;i<30;i++){
-        const heart=document.createElement("div");
-        heart.className="heart";
-        heart.innerText="❤️";
-        heart.style.left=Math.random()*100+"vw";
-        heart.style.animationDuration=3+Math.random()*4+"s";
-        heart.style.fontSize=16+Math.random()*20+"px";
-        poemScreen.appendChild(heart);
+        const h=document.createElement("div");
+        h.className="heart";
+        h.innerText="❤️";
+        h.style.left=Math.random()*100+"vw";
+        h.style.fontSize=16+Math.random()*20+"px";
+        h.style.animationDuration=3+Math.random()*4+"s";
+        poemScreen.appendChild(h);
     }
 }
 </script>
