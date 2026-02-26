@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Mi Amor ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    overflow:hidden;
+}
+
+/* 🔒 Lock */
+#lockScreen{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#ff5f9e,#4b003d);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:20;
+}
+
+.lock-box{
+    background:rgba(0,0,0,.5);
+    padding:25px;
+    border-radius:20px;
+    width:90%;
+    max-width:380px;
+    text-align:center;
+}
+
+/* 🎮 CONTENEDOR JUEGO */
+#gameContainer{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    max-width:420px;
+    padding:15px;
+    background-image:url("1.jpeg");
+    background-size:cover;
+    background-position:center;
+    border-radius:25px;
+    box-shadow:0 0 40px rgba(255,0,120,.6);
+}
+
+#overlay{
+    width:100%;
+    background:rgba(0,0,0,.55);
+    border-radius:20px;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+}
+
+#score{font-size:1.2em;}
+
+canvas{
+    width:90vw;
+    max-width:360px;
+    aspect-ratio:1/1;
+    background:#120016;
+    border-radius:18px;
+}
+
+/* 🎮 Controles */
+#controls{
+    display:grid;
+    grid-template-columns:repeat(3,60px);
+    grid-template-rows:repeat(3,60px);
+    gap:10px;
+}
+
+.control-btn{
+    background:#ff5fa2;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.4em;
+}
+
+.control-btn:active{background:#ff8fc7;}
+
+/* 💔 Game Over */
+#gameOver{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:15;
+}
+
+.gameover-box{
+    background:#2b002b;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+}
+
+/* 🌹 POEMA */
+#poemScreen{
+    position:fixed;
+    inset:0;
+    background-image:url("1.jpeg");
+    background-size:cover;
+    background-position:center;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:10;
+}
+
+#poemOverlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.65);
+}
+
+.poem-box{
+    position:relative;
+    z-index:5;
+    background:rgba(0,0,0,.55);
+    padding:25px;
+    border-radius:25px;
+    text-align:center;
+    max-width:500px;
+}
+
+/* ❤️ LLUVIA DE CORAZONES */
+.heart{
+    position:absolute;
+    top:-10%;
+    color:#ff5fa2;
+    font-size:18px;
+    animation:fall linear infinite;
+    opacity:.8;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(120vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔒 Lock -->
+<div id="lockScreen">
+    <div class="lock-box">
+        <h2>🔒 Antes de comenzar</h2>
+        <p>¿Qué cantante favorito vimos juntos?</p>
+        <input id="password" placeholder="Respuesta ❤️">
+        <button onclick="checkPassword()">Entrar</button>
+    </div>
+</div>
+
+<!-- 🎮 Game -->
+<div id="gameContainer">
+    <div id="overlay">
+        <div id="score">❤️ 0 / 20</div>
+        <canvas id="game"></canvas>
+
+        <div id="controls">
+            <div></div>
+            <div class="control-btn" onclick="setDir(0,-1)">⬆️</div>
+            <div></div>
+            <div class="control-btn" onclick="setDir(-1,0)">⬅️</div>
+            <div class="control-btn">❤️</div>
+            <div class="control-btn" onclick="setDir(1,0)">➡️</div>
+            <div></div>
+            <div class="control-btn" onclick="setDir(0,1)">⬇️</div>
+            <div></div>
+        </div>
+    </div>
+</div>
+
+<!-- 💔 Game Over -->
+<div id="gameOver">
+    <div class="gameover-box">
+        <h2>💔 Te chocaste contigo amor</h2>
+        <button onclick="restartGame()">Reintentar</button>
+    </div>
+</div>
+
+<!-- 🌹 Poema -->
+<div id="poemScreen">
+    <div id="poemOverlay"></div>
+    <div class="poem-box">
+        <h2>Para ti, mi Amorcito 💕</h2>
+        <p>
+        Buenos días, amorshito ☀️💖 por fin puedo decir  
+        que hoy estaré en tus brazos 🤍, para cuidarte,  
+        inundarte de besitos 😘, ayudarte y llenarte de amor 💫.<br><br>
+
+        Amor, no prometo que tus días serán color de rosa 🌸,  
+        pero sí sé que haré lo que sea para pintar tus días de colores 🎨✨.  
+        Amor, no prometo que tendremos días mágicos 🪄,  
+        pero haré que cada día sea mágico con nuestro amor 💞.<br><br>
+
+        Si estas estresadita, estaré ahí para darte tus masajitos 🤲💆‍♀️,  
+        Si tienes deseos, quiero ser quien los cumpla 🌠.  
+        Si quieres que baje y traiga las estrellas ✨🌌,  
+        Lo haré para que, a tu lado, el universo se complete 💫.<br><br>
+
+        No tienes que darme regalos o detalles para decirme que me amas 🎁❌,  
+        con solo tu sonrisa mi día se alegra 😊.  
+        Con solo tu presencia tengo razón de vivir 💓,  
+        Y tu aroma, en esas noches de calor, me derrite de amor 🌙🔥❤️.<br><br>
+
+        Fueron días de espera, amor ⏳, pero para mí fue una eternidad,  
+        y no me queda más que decirte: espérame un ratito más 🤍.  
+        Prontito estaré a tu lado, mi reina preciosa 👑✨.  
+        Diría que tengas un estupendo día, pero lo tendrás cuando  
+        nos encontremos y corra a tus brazos 🤗  
+        para quedarme dormido con tu amor 😴❤️.<br><br>
+
+        Atte. Gregory 💌  
+        <em>(con su media neurona 🤭)</em>
+        </p>
+    </div>
+</div>
+
+<!-- 🎵 Música -->
+<audio id="musicGame" src="musica1.mp3" loop></audio>
+<audio id="musicPoem" src="musica2.mp3" loop></audio>
+
+<script>
+const canvas=document.getElementById("game");
+const ctx=canvas.getContext("2d");
+
+let size, grid=18, snake, food, dir, score, loop, speed=280;
+
+function resize(){
+    size=Math.min(window.innerWidth*0.9,360);
+    canvas.width=size;
+    canvas.height=size;
+}
+resize();
+window.addEventListener("resize",resize);
+
+function checkPassword(){
+    if(password.value.trim().toLowerCase()==="joseca"){
+        lockScreen.style.display="none";
+        gameContainer.style.display="flex";
+        musicGame.play();
+        startGame();
+    }else alert("Respuesta incorrecta 💔");
+}
+
+function startGame(){
+    snake=[{x:9,y:9}];
+    dir={x:1,y:0};
+    food=randomFood();
+    score=0;
+    updateScore();
+    clearInterval(loop);
+    loop=setInterval(update,speed);
+}
+
+function randomFood(){
+    return {x:Math.floor(Math.random()*grid),y:Math.floor(Math.random()*grid)};
+}
+
+function setDir(x,y){
+    if(dir.x!==-x && dir.y!==-y) dir={x,y};
+}
+
+function update(){
+    let h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+
+    if(h.x<0) h.x=grid-1;
+    if(h.x>=grid) h.x=0;
+    if(h.y<0) h.y=grid-1;
+    if(h.y>=grid) h.y=0;
+
+    if(snake.some((s,i)=>i&&s.x===h.x&&s.y===h.y)){
+        clearInterval(loop);
+        gameOver.style.display="flex";
+        return;
+    }
+
+    snake.unshift(h);
+
+    if(h.x===food.x && h.y===food.y){
+        score++; updateScore(); food=randomFood();
+        if(score>=20){
+            clearInterval(loop);
+            musicGame.pause();
+            musicPoem.play();
+            gameContainer.style.display="none";
+            poemScreen.style.display="flex";
+            startHeartRain();
+            return;
+        }
+    }else snake.pop();
+
+    draw();
+}
+
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const cell=canvas.width/grid;
+    ctx.font=`${cell}px Arial`;
+    ctx.fillText("❤️",food.x*cell,food.y*cell+cell);
+    snake.forEach((s,i)=>{
+        ctx.fillStyle=i?"#ff8fc7":"#ff5fa2";
+        ctx.fillRect(s.x*cell,s.y*cell,cell-2,cell-2);
+    });
+}
+
+function updateScore(){
+    scoreEl.innerText=`❤️ ${score} / 20`;
+}
+const scoreEl=document.getElementById("score");
+
+function restartGame(){
+    gameOver.style.display="none";
+    startGame();
+}
+
+/* ❤️ Lluvia de corazones */
+function startHeartRain(){
+    for(let i=0;i<30;i++){
+        const heart=document.createElement("div");
+        heart.className="heart";
+        heart.innerText="❤️";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.animationDuration=3+Math.random()*4+"s";
+        heart.style.fontSize=16+Math.random()*20+"px";
+        poemScreen.appendChild(heart);
+    }
+}
+</script>
+
+</body>
+</html>
